@@ -15,6 +15,7 @@ Este projeto implementa uma arquitetura MVU (Model–View–Update) usando React
 
 ```md
 📦 cinesix-proj/
+│
 ├──node_modules/...
 │
 ├── 📁 public/
@@ -75,25 +76,33 @@ Este projeto implementa uma arquitetura MVU (Model–View–Update) usando React
 
 ```md
 🗂️ Estrutura de Pastas
+
 src/
 ├─ scenes/ # Todas as cenas do app
+│ │
 │ ├─ index.ts # Barril público agregando todas as scenes
+│ │
 │ ├─ \_internal/ # Código interno das scenes
 │ │ ├─ \_init.ts # Inicialização de estado
 │ │ ├─ \_update.ts # Funções puras de update
 │ │ ├─ \_types.ts # Tipos TypeScript da scene
 │ │ └─ index.ts # Barril interno
+│ │
 │ ├─ Scene01/
 │ │ └─ Scene01.tsx # View pura da Scene01
+│ │
 │ ├─ Scene02/
 │ │ └─ Scene02.tsx
+│ │
 │ └─ Scene03/
 │ └─ Scene03.tsx
+│
 ├─ core/ # Núcleo do app MVU
 │ ├─ model.ts # Modelo global
 │ ├─ update.ts # Atualizações globais
 │ ├─ view.ts # Views globais / Layout
 │ └─ app.tsx # Entrypoint do React
+│
 └─ main.tsx # Bootstrap do Vite
 ```
 
