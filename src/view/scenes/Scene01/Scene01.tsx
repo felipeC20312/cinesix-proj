@@ -75,21 +75,6 @@ export const Scene01 = () => {
           >
             <source src={videos[currentVideo]} />
           </video>
-
-          <div className="absolute bottom-6 left-0 flex w-full justify-center gap-3 md:hidden">
-            <button
-              onClick={hdlReset}
-              className="rounded-md bg-white/80 px-4 py-2 text-sm font-semibold text-gray-800 shadow-md backdrop-blur-sm"
-            >
-              Reiniciar
-            </button>
-            <button
-              onClick={hdlPlayPause}
-              className="rounded-md bg-white/80 px-4 py-2 text-sm font-semibold text-gray-800 shadow-md backdrop-blur-sm"
-            >
-              {playing ? "Pausar" : "Continuar"}
-            </button>
-          </div>
         </div>
       </div>
 

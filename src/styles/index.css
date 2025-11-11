@@ -81,6 +81,21 @@
   will-change: transform, opacity, clip-path;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -100px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #00d084 25%, #80ffaa 50%, #00d084 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
 /*=== css resets ===*/
 
 body {

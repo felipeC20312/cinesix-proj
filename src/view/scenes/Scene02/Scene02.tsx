@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import DKActionButton from "../../components/DKActioButton";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { DKLucidIconsHelper } from "../../../lib/utils/DKLucidIconsHelper";
+import { DKPhaseSelector } from "../../components/DKPhaseSelector";
 
 export const Scene02 = () => {
   const [currentVideo, setCurrentVideo] = useState(0);
@@ -44,6 +44,35 @@ export const Scene02 = () => {
     setExiting(false);
     navigate(targetScene);
   };
+
+  const items = [
+    {
+      ownerPhoto: "/assets/imgs/person-01.svg",
+      ownerName: "Fulana",
+      name: "Verduras",
+      activity: [
+        {
+          itemName: "Brócolis",
+          itemImage: "/assets/imgs/brocoli.svg",
+          itemSignal: "/assets/imgs/brocoli-signal.svg",
+          compareSignal: "/assets/imgs/chocolate-signal.svg",
+        },
+      ],
+    },
+    {
+      ownerPhoto: "/assets/imgs/person-02.svg",
+      ownerName: "Fulano",
+      name: "Doces",
+      activity: [
+        {
+          itemName: "Chocolate",
+          itemImage: "/assets/imgs/chocolate.svg",
+          itemSignal: "/assets/imgs/chocolate.svg",
+          compareSignal: "/assets/imgs/brocoli-signal.svg",
+        },
+      ],
+    },
+  ];
 
   const hdlMenu = () => {};
 
@@ -98,55 +127,21 @@ export const Scene02 = () => {
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 flex h-[200px] w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
+        className="absolute top-1/2 left-1/2 flex h-fit w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
       >
         <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
           Fulana, chegou a feira! Escolha qual barraca fulana deve visitar:
         </div>
 
-        <div className="flex flex-col gap-2">
-          <DKActionButton
-            onClick={() => {
-              hdlChangeScene("/scene02");
-            }}
-          >
-            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
-              <img
-                src="/assets/imgs/bg_feira.svg"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute top-0 right-0 z-10 h-full w-full bg-black/40" />
-              <div className="absolute top-1/2 left-1/2 z-20 flex aspect-square w-fit -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white p-2 shadow-md">
-                <DKLucidIconsHelper
-                  iconName="play"
-                  iconSize={32}
-                  iconColor="black"
-                />
-              </div>
-            </div>
-          </DKActionButton>
+        <div className="relative h-full w-full overflow-hidden">
+          <div>
+            <img src="" />
+          </div>
 
-          <DKActionButton
-            onClick={() => {
-              hdlChangeScene("/scene01");
-            }}
-          >
-            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
-              <img
-                src="/assets/imgs/bg_corredor.svg"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute top-0 right-0 z-10 h-full w-full bg-black/40" />
-              <div className="absolute top-1/2 left-1/2 z-20 flex aspect-square w-fit -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white p-2 shadow-md">
-                <DKLucidIconsHelper
-                  iconName="lock"
-                  iconSize={32}
-                  iconColor="black"
-                />
-              </div>
-            </div>
-          </DKActionButton>
+          <DKPhaseSelector elements={items} />
         </div>
+
+        <div className="flex flex-col gap-2"></div>
       </motion.div>
     </div>
   );
