@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import DKActionButton from "../../components/DKActioButton";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { DKLucidIconsHelper } from "../../../lib/utils/DKLucidIconsHelper";
 
 export const Scene01 = () => {
   const [currentVideo, setCurrentVideo] = useState(0);
@@ -94,38 +95,55 @@ export const Scene01 = () => {
 
       {/* ======= CENA DEPOIS DA SAÍDA ======= */}
       <motion.div
-        className="absolute top-1/2 left-1/2 flex h-[200px] w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-lg"
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 flex h-[200px] w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
       >
-        <div>Fulana, está saindo de casa, escolha o próximo destino:</div>
+        <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
+          Fulana, está saindo de casa, escolha o próximo destino:
+        </div>
 
-        <div className="flex flex-col gap-4">
-          <DKActionButton
-            onClick={() => {
-              hdlChangeScene("/scene01");
-            }}
-          >
-            <div className="relative w-full">
-              <img
-                src="/assets/imgs/bg_corredor.svg"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute top-0 right-0 z-10 h-full w-full bg-black/70" />
-            </div>
-          </DKActionButton>
-
+        <div className="flex flex-col gap-2">
           <DKActionButton
             onClick={() => {
               hdlChangeScene("/scene02");
             }}
           >
-            <div className="relative w-full">
+            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
+              <img
+                src="/assets/imgs/bg_feira.svg"
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute top-0 right-0 z-10 h-full w-full bg-black/40" />
+              <div className="absolute top-1/2 left-1/2 z-20 flex aspect-square w-fit -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white p-2 shadow-md">
+                <DKLucidIconsHelper
+                  iconName="play"
+                  iconSize={32}
+                  iconColor="black"
+                />
+              </div>
+            </div>
+          </DKActionButton>
+
+          <DKActionButton
+            onClick={() => {
+              hdlChangeScene("/scene01");
+            }}
+          >
+            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
               <img
                 src="/assets/imgs/bg_corredor.svg"
                 className="h-full w-full object-cover"
               />
+              <div className="absolute top-0 right-0 z-10 h-full w-full bg-black/40" />
+              <div className="absolute top-1/2 left-1/2 z-20 flex aspect-square w-fit -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white p-2 shadow-md">
+                <DKLucidIconsHelper
+                  iconName="lock"
+                  iconSize={32}
+                  iconColor="black"
+                />
+              </div>
             </div>
           </DKActionButton>
         </div>
