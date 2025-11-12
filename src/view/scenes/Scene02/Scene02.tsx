@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import DKActionButton from "../../components/DKActioButton";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { DKPhaseSelector } from "../../components/DKPhaseSelector";
 
 export const Scene02 = () => {
