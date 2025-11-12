@@ -9,7 +9,7 @@ export const Scene02 = () => {
   const [playing, setPlaying] = useState(true);
   const [exiting, setExiting] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
