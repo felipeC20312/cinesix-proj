@@ -40,14 +40,14 @@ export const Scene02 = () => {
     }
   };
 
-  const hdlChangeScene = (targetScene: string) => {
-    setExiting(false);
-    navigate(targetScene);
-  };
+  // const hdlChangeScene = (targetScene: string) => {
+  //   setExiting(false);
+  //   navigate(targetScene);
+  // };
 
   const items = [
     {
-      ownerPhoto: "/assets/imgs/person-01.svg",
+      ownerPhoto: "/assets/imgs/person-01-mask.svg",
       ownerName: "Fulana",
       name: "Verduras",
       activity: [
@@ -60,7 +60,7 @@ export const Scene02 = () => {
       ],
     },
     {
-      ownerPhoto: "/assets/imgs/person-02.svg",
+      ownerPhoto: "/assets/imgs/person-02-mask.svg",
       ownerName: "Fulano",
       name: "Doces",
       activity: [

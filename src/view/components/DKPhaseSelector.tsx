@@ -29,7 +29,6 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
 }) => {
   const [phase, setPhase] = useState(0);
   const [activity, setActivity] = useState(0);
-  const [showSignal, setShowSignal] = useState(false);
   const [isOnActivity, setIsOnActivity] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
 
@@ -43,20 +42,152 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
     }
   };
 
-  const hdlShowSignal = () => {
-    setShowSignal(!showSignal);
-  };
-
   const hdlSetActivity = (activityId: number) => {
     setActivity(activityId);
   };
 
   const hdlCompletePhase = () => {
     setIsCompleting(true);
+    setPhase(3);
     setTimeout(() => {
-      hdlSetPhase(0);
+      setPhase(0);
       setIsCompleting(false);
-    }, 1500);
+      setIsOnActivity(false);
+    }, 3500);
+  };
+
+  // Função para renderizar o conteúdo da fase baseado no estado atual
+  const renderPhaseContent = (item: (typeof elements)[0], index: number) => {
+    // Determina qual fase renderizar
+    let phaseContent = null;
+
+    if (!isOnActivity) {
+      phaseContent = (
+        <motion.div
+          key="activity-card"
+          initial={{ opacity: 0, scale: 0.8, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: -30 }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 18,
+          }}
+          className="flex flex-col items-center"
+        >
+          <p className="bg-background w-fit rounded-xl px-4 py-1 font-semibold">
+            {item.name}
+          </p>
+
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <DKActionButton
+              onClick={() => {
+                hdlSetActivity(index);
+                hdlSetPhase(0);
+              }}
+            >
+              Selecionar
+            </DKActionButton>
+          </motion.div>
+        </motion.div>
+      );
+    } else if (isOnActivity && activity === index) {
+      if (phase === 3 && isCompleting) {
+        phaseContent = (
+          <motion.div
+            key="completion"
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 50 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+            }}
+            className="flex flex-col items-center"
+          >
+            <div className="flex w-full flex-col items-center gap-3">
+              <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
+                <p className="text-xl font-bold text-green-600">
+                  Fase Concluída!
+                </p>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 1,
+                    repeat: 3,
+                    ease: "linear",
+                  }}
+                  className="text-4xl"
+                >
+                  🎉
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        );
+      } else if (phase >= 0 && phase <= 2) {
+        const progressBars = Array.from({ length: 3 }, (_, i) => (
+          <div
+            key={i}
+            className={`h-2 flex-1 rounded-full content-none ${
+              i <= phase ? "bg-primary" : "bg-background-darker"
+            }`}
+          />
+        ));
+
+        phaseContent = (
+          <motion.div
+            key={`phase-${phase}`}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{
+              type: "spring",
+              stiffness: 90,
+              damping: 18,
+            }}
+            className="flex flex-col items-center"
+          >
+            <div className="flex w-full flex-col items-center gap-3">
+              <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
+                <figure className="flex w-full gap-3">{progressBars}</figure>
+                <div>
+                  <img
+                    src={item.activity.at(index)?.itemImage}
+                    alt={item.activity.at(index)?.itemName}
+                    className="flex h-full w-full object-cover"
+                  />
+                  <img
+                    src={item.activity.at(index)?.itemSignal}
+                    alt="Signal"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <p>{item.activity.at(index)?.itemName}</p>
+              </div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <DKActionButton
+                  onClick={
+                    phase === 2
+                      ? hdlCompletePhase
+                      : () => hdlSetPhase(phase + 1)
+                  }
+                >
+                  Confirmar
+                </DKActionButton>
+              </motion.div>
+            </div>
+          </motion.div>
+        );
+      }
+    }
+
+    return phaseContent;
   };
 
   return (
@@ -76,196 +207,16 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                   <div className="border-background-darker flex aspect-square w-32 items-center justify-center overflow-hidden rounded-full border-3 bg-white">
                     <img
                       src={item.ownerPhoto}
+                      alt={item.ownerName}
                       className="h-full w-full object-cover"
                     />
                   </div>
 
-                  {/* ======= ACTIVITY SELECTOR ======= */}
-                  <AnimatePresence mode="wait">
-                    {!isOnActivity && (
-                      <motion.div
-                        key="activity-card"
-                        initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, y: -30 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 18,
-                          duration: 1,
-                        }}
-                        className="flex flex-col items-center"
-                      >
-                        <p className="bg-background w-fit rounded-xl px-4 py-1 font-semibold">
-                          {item.name}
-                        </p>
-
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <DKActionButton
-                            onClick={() => {
-                              hdlSetActivity(index);
-                              hdlSetPhase(0);
-                            }}
-                          >
-                            Selecionar
-                          </DKActionButton>
-                        </motion.div>
-                      </motion.div>
-                    )}
-
-                    <div className="w-full">
-                      {isOnActivity && activity === index && (
-                        <AnimatePresence mode="wait">
-                          {/* ======= PHASE 01 ======= */}
-                          {phase === 0 && (
-                            <motion.div
-                              key="phase-0"
-                              initial={{ opacity: 0, x: 100 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              exit={{ opacity: 0, x: -100 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 90,
-                                damping: 18,
-                              }}
-                              className="flex flex-col items-center"
-                            >
-                              <div className="flex w-full flex-col items-center gap-3">
-                                <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
-                                  <figure className="flex w-full gap-3">
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-background-darker h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-background-darker h-2 flex-1 rounded-full content-none" />
-                                  </figure>
-                                  <div>
-                                    <img
-                                      src={item.activity.at(index)?.itemImage}
-                                      className={`h-full w-full object-cover ${showSignal ? "flex" : "hidden"}`}
-                                    />
-                                    <img
-                                      src={item.activity.at(index)?.itemSignal}
-                                      className="h-full w-full object-cover"
-                                    />
-                                  </div>
-                                  <p>{item.activity.at(index)?.itemName}</p>
-                                </div>
-
-                                <motion.div
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <DKActionButton
-                                    onClick={() => hdlSetPhase(phase + 1)}
-                                  >
-                                    Confirmar
-                                  </DKActionButton>
-                                </motion.div>
-                              </div>
-                            </motion.div>
-                          )}
-
-                          {/* ======= PHASE 02 ======= */}
-                          {phase === 1 && (
-                            <motion.div
-                              key="phase-1"
-                              initial={{ opacity: 0, x: 100 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              exit={{ opacity: 0, x: -100 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 90,
-                                damping: 18,
-                              }}
-                              className="flex flex-col items-center"
-                            >
-                              <div className="flex w-full flex-col items-center gap-3">
-                                <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
-                                  <figure className="flex w-full gap-3">
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-background-darker h-2 flex-1 rounded-full content-none" />
-                                  </figure>
-                                  <div>
-                                    <img
-                                      src={item.activity.at(index)?.itemImage}
-                                      className={`h-full w-full object-cover ${showSignal ? "flex" : "hidden"}`}
-                                    />
-                                    <img
-                                      src={item.activity.at(index)?.itemSignal}
-                                      className="h-full w-full object-cover"
-                                    />
-                                  </div>
-                                  <p>{item.activity.at(index)?.itemName}</p>
-                                </div>
-
-                                <motion.div
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <DKActionButton
-                                    onClick={() => hdlSetPhase(phase + 1)}
-                                  >
-                                    Confirmar
-                                  </DKActionButton>
-                                </motion.div>
-                              </div>
-                            </motion.div>
-                          )}
-
-                          {/* ======= PHASE 03 ======= */}
-                          {phase === 2 && (
-                            <motion.div
-                              key="phase-2"
-                              initial={{ opacity: 0, x: 100 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              exit={{ opacity: 0, x: -100 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 90,
-                                damping: 18,
-                              }}
-                              className="flex flex-col items-center"
-                            >
-                              <div className="flex w-full flex-col items-center gap-3">
-                                <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
-                                  <figure className="flex w-full gap-3">
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                    <div className="bg-primary h-2 flex-1 rounded-full content-none" />
-                                  </figure>
-                                  <div>
-                                    <img
-                                      src={item.activity.at(index)?.itemImage}
-                                      className={`h-full w-full object-cover ${showSignal ? "flex" : "hidden"}`}
-                                    />
-                                    <img
-                                      src={item.activity.at(index)?.itemSignal}
-                                      className="h-full w-full object-cover"
-                                    />
-                                  </div>
-                                  <p>{item.activity.at(index)?.itemName}</p>
-                                </div>
-
-                                <motion.div
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <DKActionButton
-                                    onClick={() => hdlSetPhase(phase + 1)}
-                                  >
-                                    Confirmar
-                                  </DKActionButton>
-                                </motion.div>
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      )}
-                    </div>
-                  </AnimatePresence>
+                  <div className="w-full">
+                    <AnimatePresence mode="wait">
+                      {renderPhaseContent(item, index)}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </SwiperSlide>
             );
