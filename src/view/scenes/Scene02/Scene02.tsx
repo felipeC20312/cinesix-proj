@@ -47,9 +47,10 @@ export const Scene02 = () => {
 
   const items = [
     {
-      ownerPhoto: "/assets/imgs/person-01-mask.svg",
+      ownerPhoto: "/assets/imgs/person-02-mask.svg",
       ownerName: "Fulana",
       name: "Verduras",
+      tentImage: "/assets/imgs/vegetable_tent.png",
       activity: [
         {
           itemName: "Brócolis",
@@ -60,9 +61,10 @@ export const Scene02 = () => {
       ],
     },
     {
-      ownerPhoto: "/assets/imgs/person-02-mask.svg",
+      ownerPhoto: "/assets/imgs/person-01-mask.svg",
       ownerName: "Fulano",
       name: "Doces",
+      tentImage: "/assets/imgs/candy_tent.png",
       activity: [
         {
           itemName: "Chocolate",
@@ -130,7 +132,7 @@ export const Scene02 = () => {
         className="absolute top-1/2 left-1/2 flex h-fit w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
       >
         <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
-          Fulana, chegou a feira! Escolha qual barraca fulana deve visitar:
+          Nina, chegou a feira! Escolha qual barraca fulana deve visitar:
         </div>
 
         <div className="relative h-full w-full overflow-hidden">

@@ -53,7 +53,7 @@ export const Scene01 = () => {
       <div className="absolute top-1/2 left-1/2 flex w-11/12 -translate-x-1/2 -translate-y-1/2 flex-col gap-4">
         <div className="hidden w-full justify-between">
           <div className="flex rounded-lg bg-white px-4 py-1 font-medium">
-            Casa da Fulana
+            Casa da Nina
           </div>
           <div className="flex justify-end gap-4">
             <DKActionButton onClick={hdlReset}>Reiniciar</DKActionButton>
@@ -86,7 +86,7 @@ export const Scene01 = () => {
         className="absolute top-1/2 left-1/2 flex h-[200px] w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
       >
         <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
-          Fulana, está saindo de casa, escolha o próximo destino:
+          Nina, está saindo de casa, escolha o próximo destino:
         </div>
 
         <div className="flex flex-col gap-2">

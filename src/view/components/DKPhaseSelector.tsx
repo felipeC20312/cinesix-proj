@@ -14,6 +14,7 @@ interface DKPhaseSelectorProps {
     ownerPhoto: string;
     ownerName: string;
     name: string;
+    tentImage: string;
     activity: Array<{
       itemName: string;
       itemImage: string;
@@ -73,11 +74,15 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
             stiffness: 200,
             damping: 18,
           }}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center gap-3"
         >
           <p className="bg-background w-fit rounded-xl px-4 py-1 font-semibold">
             {item.name}
           </p>
+
+          <div className="flex aspect-square w-4/5">
+            <img src={item.tentImage} className="h-full w-full object-cover" />
+          </div>
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <DKActionButton
