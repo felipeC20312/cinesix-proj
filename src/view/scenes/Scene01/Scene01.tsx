@@ -48,7 +48,7 @@ export const Scene01 = () => {
   const hdlMenu = () => {};
 
   return (
-    <div className="from-primary to-primary-light relative flex h-dvh w-full items-center justify-center overflow-hidden bg-gradient-to-b">
+    <div className="from-gradient-first-dark to-gradient-first-light relative flex h-dvh w-full items-center justify-center overflow-hidden bg-gradient-to-b">
       {/* ======= CENA PRINCIPAL ======= */}
       <div className="absolute top-1/2 left-1/2 flex w-11/12 -translate-x-1/2 -translate-y-1/2 flex-col gap-4">
         <div className="hidden w-full justify-between">
@@ -95,7 +95,7 @@ export const Scene01 = () => {
               hdlChangeScene("/scene02");
             }}
           >
-            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
+            <div className="relative w-full overflow-clip rounded-lg border-4 border-white">
               <img
                 src="/assets/imgs/bg_feira.svg"
                 className="h-full w-full object-cover"
@@ -116,7 +116,7 @@ export const Scene01 = () => {
               hdlChangeScene("/scene01");
             }}
           >
-            <div className="relative w-full overflow-clip rounded-lg border-4 border-white shadow-md">
+            <div className="relative w-full overflow-clip rounded-lg border-4 border-white">
               <img
                 src="/assets/imgs/bg_corredor.svg"
                 className="h-full w-full object-cover"

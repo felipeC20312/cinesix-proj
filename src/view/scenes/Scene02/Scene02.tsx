@@ -1,17 +1,19 @@
 import { useRef, useState } from "react";
-import DKActionButton from "../../components/DKActioButton";
-import { motion } from "framer-motion";
-// import { useNavigate } from "react-router-dom";
+
 import { DKPhaseSelector } from "../../components/DKPhaseSelector";
+import fairItems from "@lib/datasets/fairItems.json";
+
+import { motion } from "framer-motion";
+import { DKPhoshorIconsHelper } from "@lib/utils/DKPhosphorIconsHelper";
 
 export const Scene02 = () => {
-  const [currentVideo, setCurrentVideo] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [exiting, setExiting] = useState(false);
-
-  // const navigate = useNavigate();
+  const [currentVideo, setCurrentVideo] = useState(0);
+  const [isOnActivity, setIsOnActivity] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const swiperRef = useRef<any>(null);
 
   const videos = ["assets/videos/Scene02-1.mp4"];
 
@@ -40,61 +42,10 @@ export const Scene02 = () => {
     }
   };
 
-  // const hdlChangeScene = (targetScene: string) => {
-  //   setExiting(false);
-  //   navigate(targetScene);
-  // };
-
-  const items = [
-    {
-      ownerPhoto: "/assets/imgs/person-02-mask.svg",
-      ownerName: "Fulana",
-      name: "Verduras",
-      tentImage: "/assets/imgs/vegetable_tent.png",
-      activity: [
-        {
-          itemName: "Brócolis",
-          itemImage: "/assets/imgs/brocoli.svg",
-          itemSignal: "/assets/imgs/brocoli-signal.svg",
-          compareSignal: "/assets/imgs/chocolate-signal.svg",
-        },
-      ],
-    },
-    {
-      ownerPhoto: "/assets/imgs/person-01-mask.svg",
-      ownerName: "Fulano",
-      name: "Doces",
-      tentImage: "/assets/imgs/candy_tent.png",
-      activity: [
-        {
-          itemName: "Chocolate",
-          itemImage: "/assets/imgs/chocolate.svg",
-          itemSignal: "/assets/imgs/chocolate.svg",
-          compareSignal: "/assets/imgs/brocoli-signal.svg",
-        },
-      ],
-    },
-  ];
-
-  const hdlMenu = () => {};
-
   return (
-    <div className="from-primary to-primary-light relative flex h-dvh w-full items-center justify-center overflow-hidden bg-gradient-to-b">
+    <div className="from-gradient-second-dark to-gradient-second-light relative flex h-dvh w-full items-center justify-center overflow-hidden bg-linear-to-b">
       {/* ======= CENA PRINCIPAL ======= */}
       <div className="absolute top-1/2 left-1/2 flex w-11/12 -translate-x-1/2 -translate-y-1/2 flex-col gap-4">
-        <div className="hidden w-full justify-between">
-          <div className="flex rounded-lg bg-white px-4 py-1 font-medium">
-            Casa da Fulana
-          </div>
-          <div className="flex justify-end gap-4">
-            <DKActionButton onClick={hdlReset}>Reiniciar</DKActionButton>
-            <DKActionButton onClick={hdlPlayPause}>
-              {playing ? "Pausar" : "Continuar"}
-            </DKActionButton>
-            <DKActionButton onClick={hdlMenu}>Menu</DKActionButton>
-          </div>
-        </div>
-
         <div className="bg-background aspect-video h-11/12 overflow-hidden rounded-2xl border-6 border-white md:h-auto md:w-full">
           <video
             key={currentVideo}
@@ -129,18 +80,48 @@ export const Scene02 = () => {
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 flex h-fit w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
+        className="absolute top-1/2 left-1/2 flex h-fit w-2/5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
       >
-        <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
-          Nina, chegou a feira! Escolha qual barraca fulana deve visitar:
-        </div>
-
-        <div className="relative h-full w-full overflow-hidden">
-          <div>
-            <img src="" />
+        {!isOnActivity && (
+          <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
+            Nina, chegou a feira! Escolha qual barraca Nina deve visitar:
           </div>
+        )}
 
-          <DKPhaseSelector elements={items} />
+        <div className="relative flex h-full w-full items-center gap-5 overflow-hidden">
+          {!isOnActivity && (
+            <button
+              className="bg-background flex h-fit w-fit rounded-full p-3 shadow-xl"
+              onClick={() => swiperRef.current?.slidePrev()}
+            >
+              <DKPhoshorIconsHelper
+                iconName="arrowFatLeft"
+                iconColor="var(--foreground)"
+                iconSize={28}
+                iconWeight="fill"
+              />
+            </button>
+          )}
+
+          <DKPhaseSelector
+            elements={fairItems}
+            swiperRef={swiperRef}
+            onActivityChange={setIsOnActivity}
+          />
+
+          {!isOnActivity && (
+            <button
+              className="bg-background flex h-fit w-fit rounded-full p-3 shadow-xl"
+              onClick={() => swiperRef.current?.slideNext()}
+            >
+              <DKPhoshorIconsHelper
+                iconName="arrowFatRight"
+                iconColor="var(--foreground)"
+                iconSize={28}
+                iconWeight="fill"
+              />
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col gap-2"></div>

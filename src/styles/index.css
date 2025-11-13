@@ -7,8 +7,13 @@
   --background-darker: #d9d9d9;
   --background-light: #ffffff;
   --foreground: #1d1c1a;
-  --primary: #a3c3f1;
-  --primary-light: #d5f0f8;
+  --primary: #fd543d;
+  --primary-light: #fd6c58;
+  --primary-lighter: #fe8272;
+  --gradient-first-dark: #a3c3f1;
+  --gradient-first-light: #d5f0f8;
+  --gradient-second-dark: #f1b9a3;
+  --gradient-second-light: #f8ebd5;
 }
 
 [data-theme="dark"] {
@@ -17,9 +22,13 @@
   --background-darker: #1a1b23;
   --background-light: #404459;
   --foreground: #fdfdfd;
-  --primary: #e17009;
-  --primary-light: #ffb42d;
-  --primary-lighter: #ffcd74;
+  --primary: #fd543d;
+  --primary-light: #fd6c58;
+  --primary-lighter: #fe8272;
+  --gradient-first-dark: #a3c3f1;
+  --gradient-first-light: #d5f0f8;
+  --gradient-second-dark: #f1b9a3;
+  --gradient-second-light: #f8ebd5;
 }
 
 @theme inline {
@@ -31,6 +40,10 @@
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-primary-lighter: var(--primary-lighter);
+  --color-gradient-first-dark: var(--gradient-first-dark);
+  --color-gradient-first-light: var(--gradient-first-light);
+  --color-gradient-second-dark: var(--gradient-second-dark);
+  --color-gradient-second-light: var(--gradient-second-light);
 }
 
 /*=== UTILITY ===*/
@@ -91,7 +104,12 @@
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #00d084 25%, #80ffaa 50%, #00d084 75%);
+  background: linear-gradient(
+    90deg,
+    var(--primary) 25%,
+    var(--primary-lighter) 50%,
+    var(--primary-light) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }

@@ -1,0 +1,30 @@
+[
+  {
+    "ownerPhoto": "/assets/imgs/person-02-mask.svg",
+    "ownerName": "Fulana",
+    "name": "Verduras",
+    "tentImage": "/assets/imgs/vegetable_tent.png",
+    "activity": [
+      {
+        "itemName": "Brócolis",
+        "itemImage": "/assets/imgs/brocoli.svg",
+        "itemSignal": "/assets/imgs/brocoli-signal.svg",
+        "compareSignal": "/assets/imgs/chocolate-signal.svg"
+      }
+    ]
+  },
+  {
+    "ownerPhoto": "/assets/imgs/person-01-mask.svg",
+    "ownerName": "Fulano",
+    "name": "Doces",
+    "tentImage": "/assets/imgs/candy_tent.png",
+    "activity": [
+      {
+        "itemName": "Chocolate",
+        "itemImage": "/assets/imgs/chocolate.svg",
+        "itemSignal": "/assets/imgs/chocolate.svg",
+        "compareSignal": "/assets/imgs/brocoli-signal.svg"
+      }
+    ]
+  }
+]
