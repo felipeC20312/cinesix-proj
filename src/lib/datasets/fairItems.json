@@ -22,7 +22,7 @@
       {
         "itemName": "Chocolate",
         "itemImage": "/assets/imgs/chocolate.svg",
-        "itemSignal": "/assets/imgs/chocolate.svg",
+        "itemSignal": "/assets/imgs/chocolate-signal.svg",
         "compareSignal": "/assets/imgs/brocoli-signal.svg"
       }
     ]

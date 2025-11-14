@@ -57,33 +57,25 @@ export const Scene02 = () => {
           >
             <source src={videos[currentVideo]} />
           </video>
-
-          <div className="absolute bottom-6 left-0 flex w-full justify-center gap-3 md:hidden">
-            <button
-              onClick={hdlReset}
-              className="rounded-md bg-white/80 px-4 py-2 text-sm font-semibold text-gray-800 shadow-md backdrop-blur-sm"
-            >
-              Reiniciar
-            </button>
-            <button
-              onClick={hdlPlayPause}
-              className="rounded-md bg-white/80 px-4 py-2 text-sm font-semibold text-gray-800 shadow-md backdrop-blur-sm"
-            >
-              {playing ? "Pausar" : "Continuar"}
-            </button>
-          </div>
         </div>
       </div>
 
       {/* ======= CENA DEPOIS DA SAÍDA ======= */}
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={exiting ? { opacity: 0.75 } : { opacity: 0 }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+        className="bg-foreground absolute z-10 h-full w-full content-none"
+      />
+
+      <motion.div
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 flex h-fit w-2/5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
+        className="absolute top-1/2 left-1/2 z-20 flex h-fit w-2/5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-5 rounded-lg p-4"
       >
         {!isOnActivity && (
-          <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
+          <div className="border-background-darker rounded-xl border bg-white px-4 py-2 text-center text-lg font-semibold">
             Nina, chegou a feira! Escolha qual barraca Nina deve visitar:
           </div>
         )}

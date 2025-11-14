@@ -99,7 +99,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                 hdlSetPhase(0);
               }}
             >
-              <p className="text-background font-bold">Selecionar</p>
+              <p className="text-background text-lg font-bold">Selecionar</p>
             </DKActionButton>
           </motion.div>
         </motion.div>
@@ -144,7 +144,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
           <div
             key={i}
             className={`h-2 flex-1 rounded-full content-none ${
-              i <= phase ? "bg-primary" : "bg-background-darker"
+              i <= phase ? "shimmer bg-primary" : "bg-background-darker"
             }`}
           />
         ));
@@ -160,46 +160,48 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
               stiffness: 90,
               damping: 18,
             }}
-            className="flex flex-col items-center"
+            className="flex h-full w-full flex-col items-center gap-4 md:w-[50%]"
           >
-            <div className="flex w-full flex-col items-center gap-3">
-              <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
-                <figure className="flex w-full gap-3">{progressBars}</figure>
-                <div>
+            <div className="flex w-full flex-col items-center justify-center gap-4 rounded-xl bg-white p-3">
+              <figure className="flex w-full gap-3">{progressBars}</figure>
+              <div className="border-background-darker flex aspect-square overflow-hidden rounded-xl border-3 p-2">
+                {!showSignal ? (
                   <img
-                    src={item.activity.at(index)?.itemImage}
-                    alt={item.activity.at(index)?.itemName}
-                    className="flex h-full w-full object-cover"
+                    src={item.activity.at(0)?.itemImage}
+                    alt={item.activity.at(0)?.itemName}
+                    className="h-full w-full object-fill"
                   />
+                ) : (
                   <img
-                    src={item.activity.at(index)?.itemSignal}
-                    alt="Signal"
-                    className="h-full w-full object-cover"
+                    src={item.activity.at(0)?.itemSignal}
+                    alt={item.activity.at(0)?.itemName}
+                    className="h-full w-full object-fill"
                   />
-                </div>
-                <p>{item.activity.at(index)?.itemName}</p>
+                )}
               </div>
-
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <DKActionButton
-                  className="rounded-xl px-4 py-1 font-semibold"
-                  onClick={() => hdlSetPhase(phase + 1)}
-                >
-                  <p className="font-bold">Confirmar</p>
-                </DKActionButton>
-              </motion.div>
+              <p className="text-primary text-xl font-semibold">
+                {item.activity.at(0)?.itemName}
+              </p>
             </div>
+
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <DKActionButton
+                className="bg-primary rounded-xl px-4 py-1 font-semibold"
+                onClick={() => hdlSetPhase(phase + 1)}
+              >
+                <p className="text-background-light text-xl font-bold">
+                  Confirmar
+                </p>
+              </DKActionButton>
+            </motion.div>
           </motion.div>
         );
       } else if (phase === 1) {
         const progressBars = Array.from({ length: 3 }, (_, i) => (
           <div
             key={i}
-            className={`shimmer h-2 flex-1 rounded-full content-none ${
-              i <= phase ? "bg-primary" : "bg-background-darker"
+            className={`h-2 flex-1 rounded-full content-none ${
+              i <= phase ? "shimmer bg-primary" : "bg-background-darker"
             }`}
           />
         ));
@@ -220,32 +222,36 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
             <div className="flex w-full flex-col items-center gap-3">
               <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
                 <figure className="flex w-full gap-3">{progressBars}</figure>
-                <div>
-                  <img
-                    src={item.activity.at(index)?.itemImage}
-                    alt={item.activity.at(index)?.itemName}
-                    className="flex h-full w-full object-cover"
-                  />
-                  <img
-                    src={item.activity.at(index)?.itemSignal}
-                    alt="Signal"
-                    className="h-full w-full object-cover"
-                  />
+
+                <p className="text-xl">
+                  Qual o sinal do {item.activity.at(0)?.itemName} ?
+                </p>
+
+                <div className="flex h-full w-full gap-3">
+                  <div className="border-background-darker box-border w-full rounded-xl border-2 p-2">
+                    <img
+                      src={item.activity.at(0)?.itemSignal}
+                      alt="itemSignal"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+
+                  <div className="border-background-darker box-border w-full rounded-xl border-2 p-2">
+                    <img
+                      src={item.activity.at(0)?.compareSignal}
+                      alt="itemSignal"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
-                <p>{item.activity.at(index)?.itemName}</p>
               </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <DKActionButton
+                className="bg-primary rounded-xl px-4 py-1 font-semibold"
+                onClick={() => hdlSetPhase(phase + 1)}
               >
-                <DKActionButton
-                  className="rounded-xl px-4 py-1 font-semibold"
-                  onClick={() => hdlSetPhase(phase + 1)}
-                >
-                  <p className="font-bold">Confirmar</p>
-                </DKActionButton>
-              </motion.div>
+                <p className="text-background font-bold">Confirmar</p>
+              </DKActionButton>
             </div>
           </motion.div>
         );
@@ -275,36 +281,33 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
             <div className="flex w-full flex-col items-center gap-3">
               <div className="flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-white p-3">
                 <figure className="flex w-full gap-3">{progressBars}</figure>
-                <div>
+                <p className="text-xl">escreva o significado do sinal:</p>
+                <div className="border-background-darker box-border w-full rounded-xl border-2 p-2">
                   <img
-                    src={item.activity.at(index)?.itemImage}
-                    alt={item.activity.at(index)?.itemName}
-                    className="flex h-full w-full object-cover"
-                  />
-                  <img
-                    src={item.activity.at(index)?.itemSignal}
-                    alt="Signal"
+                    src={item.activity.at(0)?.itemSignal}
+                    alt="itemSignal"
                     className="h-full w-full object-cover"
                   />
                 </div>
                 <p>{item.activity.at(index)?.itemName}</p>
               </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (phase === 2) hdlCompletePhase();
+                  else hdlSetPhase(phase + 1);
+                }}
               >
+                <input />
+
                 <DKActionButton
+                  type="submit"
                   className="rounded-xl px-4 py-1 font-semibold"
-                  onClick={
-                    phase === 2
-                      ? hdlCompletePhase
-                      : () => hdlSetPhase(phase + 1)
-                  }
                 >
                   <p className="font-bold">Confirmar</p>
                 </DKActionButton>
-              </motion.div>
+              </form>
             </div>
           </motion.div>
         );
@@ -329,7 +332,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
         : elements.map((item, index) => {
             return (
               <SwiperSlide key={index}>
-                <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+                <div className="flex flex-col items-center justify-center gap-4">
                   <div className="border-primary-light flex aspect-square w-32 items-center justify-center overflow-hidden rounded-full border-3 bg-white shadow-xl">
                     <img
                       src={item.ownerPhoto}
@@ -338,11 +341,9 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                     />
                   </div>
 
-                  <div className="w-full">
-                    <AnimatePresence mode="wait">
-                      {renderPhaseContent(item, index)}
-                    </AnimatePresence>
-                  </div>
+                  <AnimatePresence mode="wait">
+                    {renderPhaseContent(item, index)}
+                  </AnimatePresence>
                 </div>
               </SwiperSlide>
             );
