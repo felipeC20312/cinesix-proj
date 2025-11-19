@@ -5,6 +5,7 @@ import DKActionButton from "./DKActioButton";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 
 import "swiper/css";
 
@@ -37,6 +38,20 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
   const [showSignal, setShowSignal] = useState(false);
   const [isOnActivity, setIsOnActivity] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
+
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit = (data: any) => {
+    const formatedMeaning = String(data.meaning).toLowerCase().trim();
+    const formatedInput = String(data.input).toLowerCase().trim();
+    if (phase === 2 && formatedMeaning === formatedInput) hdlCompletePhase();
+    else hdlSetPhase(phase + 1);
+    reset();
+  };
+
+  const hdlCorretAsw = () => {};
+
+  const hdlWrongAsw = () => {};
 
   useEffect(() => {
     if (onActivityChange) onActivityChange(isOnActivity);
@@ -298,23 +313,29 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                     className="h-full w-full object-cover"
                   />
                 </div>
-                <p>{item.activity.at(index)?.itemName}</p>
               </div>
 
               <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (phase === 2) hdlCompletePhase();
-                  else hdlSetPhase(phase + 1);
-                }}
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex w-full flex-col items-center justify-center gap-3"
               >
-                <input />
+                <input
+                  {...register("meaning")}
+                  type="hidden"
+                  value={item.activity.at(index)?.itemName}
+                />
+
+                <input
+                  {...register("input")}
+                  className="border-background-darker bg-background w-full rounded-xl border-2 px-2 py-1"
+                  placeholder="Significado..."
+                />
 
                 <DKActionButton
                   type="submit"
-                  className="rounded-xl px-4 py-1 font-semibold"
+                  className="bg-primary rounded-xl px-4 py-1 font-semibold"
                 >
-                  <p className="font-bold">Confirmar</p>
+                  <p className="text-background font-bold">Confirmar</p>
                 </DKActionButton>
               </form>
             </div>
