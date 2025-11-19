@@ -127,3 +127,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 10rem;
 }
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}

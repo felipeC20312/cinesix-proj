@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { DKPhoshorIconsHelper } from "@lib/utils/DKPhosphorIconsHelper";
 
 export const Scene02 = () => {
-  const [playing, setPlaying] = useState(true);
   const [exiting, setExiting] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isOnActivity, setIsOnActivity] = useState(false);
@@ -22,23 +21,6 @@ export const Scene02 = () => {
       setCurrentVideo((prev) => prev + 1);
     } else {
       setExiting(true);
-    }
-  };
-
-  const hdlReset = () => {
-    setCurrentVideo(0);
-    setExiting(false);
-  };
-
-  const hdlPlayPause = () => {
-    if (!videoRef.current) return;
-
-    if (playing) {
-      videoRef.current.pause();
-      setPlaying(false);
-    } else {
-      videoRef.current.play();
-      setPlaying(true);
     }
   };
 
@@ -72,7 +54,7 @@ export const Scene02 = () => {
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 z-20 flex h-fit w-2/5 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-5 rounded-lg p-4"
+        className="absolute top-1/2 left-1/2 z-20 flex h-fit w-11/12 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-5 rounded-lg p-4 md:w-2/5"
       >
         {!isOnActivity && (
           <div className="border-background-darker rounded-xl border bg-white px-4 py-2 text-center text-lg font-semibold">

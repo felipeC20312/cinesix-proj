@@ -40,7 +40,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
 
   useEffect(() => {
     if (onActivityChange) onActivityChange(isOnActivity);
-  }, [isOnActivity]);
+  }, [isOnActivity, onActivityChange]);
 
   const hdlSetPhase = (phaseId: number) => {
     if (phaseId <= elements.length) {
@@ -66,6 +66,10 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
     }, 3500);
   };
 
+  const hdlShowSignal = () => {
+    setShowSignal((prev) => !prev);
+  };
+
   const renderPhaseContent = (item: (typeof elements)[0], index: number) => {
     let phaseContent = null;
 
@@ -83,7 +87,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
           }}
           className="flex flex-col items-center gap-3 p-4"
         >
-          <p className="bg-background w-fit rounded-xl px-4 py-1 font-semibold shadow-xl">
+          <p className="bg-background w-fit rounded-xl px-4 py-1 text-center font-semibold shadow-xl">
             Barraca de {item.name}
           </p>
 
@@ -164,19 +168,24 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
           >
             <div className="flex w-full flex-col items-center justify-center gap-4 rounded-xl bg-white p-3">
               <figure className="flex w-full gap-3">{progressBars}</figure>
-              <div className="border-background-darker flex aspect-square overflow-hidden rounded-xl border-3 p-2">
+              <p>Clique na figura para aprender o sinal</p>
+              <div className="border-background-darker flex aspect-square w-full overflow-hidden rounded-xl border-3 p-2">
                 {!showSignal ? (
-                  <img
-                    src={item.activity.at(0)?.itemImage}
-                    alt={item.activity.at(0)?.itemName}
-                    className="h-full w-full object-fill"
-                  />
+                  <button onClick={hdlShowSignal}>
+                    <img
+                      src={item.activity.at(0)?.itemImage}
+                      alt={item.activity.at(0)?.itemName}
+                      className="h-full w-full object-fill"
+                    />
+                  </button>
                 ) : (
-                  <img
-                    src={item.activity.at(0)?.itemSignal}
-                    alt={item.activity.at(0)?.itemName}
-                    className="h-full w-full object-fill"
-                  />
+                  <button onClick={hdlShowSignal}>
+                    <img
+                      src={item.activity.at(0)?.itemSignal}
+                      alt={item.activity.at(0)?.itemName}
+                      className="h-full w-full object-fill"
+                    />
+                  </button>
                 )}
               </div>
               <p className="text-primary text-xl font-semibold">

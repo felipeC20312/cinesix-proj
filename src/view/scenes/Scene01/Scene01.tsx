@@ -83,7 +83,7 @@ export const Scene01 = () => {
         initial={{ y: "100%", opacity: 0 }}
         animate={exiting ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 flex h-[200px] w-1/4 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg"
+        className="absolute top-1/2 left-1/2 flex h-[200px] w-11/12 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-2 rounded-lg md:w-1/4"
       >
         <div className="rounded-lg bg-white p-2 text-center font-semibold shadow-md">
           Nina, está saindo de casa, escolha o próximo destino:

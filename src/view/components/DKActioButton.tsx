@@ -24,7 +24,7 @@ const DKActionButton: React.FC<DKActionButtonProps> = ({
         type={type}
         onClick={onClick}
         disabled={disabled}
-        className={`border-background-dark bg-background text-foreground rounded-lg font-medium shadow-xl ${className}`}
+        className={`border-background-dark bg-background rounded-lg font-medium shadow-lg ${className}`}
       >
         {label}
         {children}
