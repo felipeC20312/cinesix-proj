@@ -382,16 +382,57 @@ export const StartPage = () => {
             open={showDiolog}
             className="bg-background absolute top-1/2 left-1/2 z-20 flex w-11/12 -translate-1/2 flex-col items-center justify-center gap-3 rounded-xl p-3 text-center md:w-1/2"
           >
-            <section>
-              <h1 className="text-2xl font-semibold">Fulano de tal</h1>
-              <p>lorem ipsum dolor sit amet</p>
+            <div className="flex max-h-5/6 flex-col gap-3 overflow-y-scroll">
+              <section>
+                <h1 className="text-2xl font-semibold">
+                  Giovanna Rodrigues Silva
+                </h1>
+                <p className="font-thin">
+                  Storyboard, construção narrativa, desing, construção do fluxo
+                  de interação e branding, animação
+                </p>
+              </section>
 
-              <h1 className="text-2xl font-semibold">Fulano de tal</h1>
-              <p>lorem ipsum dolor sit amet</p>
+              <section>
+                <h1 className="text-2xl font-semibold">Felipe C. Valverde</h1>
+                <p className="font-thin">
+                  Consultoria técnica e desenvolvimento do sistema customizado.
+                </p>
+              </section>
 
-              <h1 className="text-2xl font-semibold">Fulano de tal</h1>
-              <p>lorem ipsum dolor sit amet</p>
-            </section>
+              <section>
+                <h1 className="text-2xl font-semibold">Dayvidian Critian</h1>
+                <p className="font-thin">
+                  Branding, escolha de trilha, animação
+                </p>
+              </section>
+
+              <section>
+                <h1 className="text-2xl font-semibold">Ana Vitória</h1>
+                <p className="font-thin">
+                  Branding, escolha de trilha, animação
+                </p>
+              </section>
+
+              <section>
+                <h1 className="text-2xl font-semibold">Ambrosio Jose</h1>
+                <p className="font-thin">
+                  Branding, escolha de trilha, animação
+                </p>
+              </section>
+
+              <section>
+                <h1 className="text-2xl font-semibold">
+                  Fernanda Soares (Nanda Marine)
+                </h1>
+                <p>Branding, escolha de trilha, animação</p>
+              </section>
+
+              <section>
+                <h1 className="text-2xl font-semibold">Thais Vitória</h1>
+                <p>Branding, escolha de trilha, animação</p>
+              </section>
+            </div>
 
             <DKActionButton
               className="border-background/50 rounded-lg border-2 bg-lime-300 px-4 py-1 font-bold text-lime-900 !shadow-none"

@@ -38,20 +38,53 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
   const [showSignal, setShowSignal] = useState(false);
   const [isOnActivity, setIsOnActivity] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<
+    null | "correct" | "wrong"
+  >(null);
+  const [animating, setAnimating] = useState(false);
 
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data: any) => {
     const formatedMeaning = String(data.meaning).toLowerCase().trim();
     const formatedInput = String(data.input).toLowerCase().trim();
-    if (phase === 2 && formatedMeaning === formatedInput) hdlCompletePhase();
-    else hdlSetPhase(phase + 1);
+
+    console.log(formatedMeaning, formatedInput);
+    if (phase === 2 && formatedMeaning === formatedInput) {
+      hdlCompletePhase();
+    }
     reset();
   };
 
-  const hdlCorretAsw = () => {};
+  const hdlSelectAnswer = (isCorrect: boolean) => {
+    if (animating) return;
 
-  const hdlWrongAsw = () => {};
+    if (isCorrect) {
+      setSelectedOption("correct");
+      setTimeout(() => {
+        setSelectedOption(null);
+        hdlSetPhase(phase + 1);
+      }, 800);
+    } else {
+      setAnimating(true);
+      setSelectedOption("wrong");
+
+      setTimeout(() => {
+        setSelectedOption(null);
+        setAnimating(false);
+      }, 3000);
+    }
+  };
+
+  const getBorderClass = (option: "correct" | "wrong") => {
+    if (selectedOption === option) {
+      return option === "correct"
+        ? "border-green-500 transition-all duration-700"
+        : "border-red-500 transition-all duration-[2000ms]";
+    }
+
+    return "border-background-darker";
+  };
 
   useEffect(() => {
     if (onActivityChange) onActivityChange(isOnActivity);
@@ -186,7 +219,10 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
               <p>Clique na figura para aprender o sinal</p>
               <div className="border-background-darker flex aspect-square w-full overflow-hidden rounded-xl border-3 p-2">
                 {!showSignal ? (
-                  <button onClick={hdlShowSignal}>
+                  <button
+                    onClick={hdlShowSignal}
+                    className="flex w-full items-center justify-center"
+                  >
                     <img
                       src={item.activity.at(0)?.itemImage}
                       alt={item.activity.at(0)?.itemName}
@@ -194,7 +230,10 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                     />
                   </button>
                 ) : (
-                  <button onClick={hdlShowSignal}>
+                  <button
+                    onClick={hdlShowSignal}
+                    className="flex w-full items-center justify-center"
+                  >
                     <img
                       src={item.activity.at(0)?.itemSignal}
                       alt={item.activity.at(0)?.itemName}
@@ -252,30 +291,29 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                 </p>
 
                 <div className="flex h-full w-full gap-3">
-                  <div className="border-background-darker box-border w-full rounded-xl border-2 p-2">
+                  <DKActionButton
+                    className={`box-border w-full rounded-xl border-2 p-2 ${getBorderClass("correct")}`}
+                    onClick={() => hdlSelectAnswer(true)}
+                  >
                     <img
                       src={item.activity.at(0)?.itemSignal}
                       alt="itemSignal"
                       className="h-full w-full object-cover"
                     />
-                  </div>
+                  </DKActionButton>
 
-                  <div className="border-background-darker box-border w-full rounded-xl border-2 p-2">
+                  <DKActionButton
+                    className={`box-border w-full rounded-xl border-2 p-2 ${getBorderClass("wrong")}`}
+                    onClick={() => hdlSelectAnswer(false)}
+                  >
                     <img
                       src={item.activity.at(0)?.compareSignal}
                       alt="itemSignal"
                       className="h-full w-full object-cover"
                     />
-                  </div>
+                  </DKActionButton>
                 </div>
               </div>
-
-              <DKActionButton
-                className="bg-primary rounded-xl px-4 py-1 font-semibold"
-                onClick={() => hdlSetPhase(phase + 1)}
-              >
-                <p className="text-background font-bold">Confirmar</p>
-              </DKActionButton>
             </div>
           </motion.div>
         );
@@ -322,7 +360,7 @@ export const DKPhaseSelector: React.FC<DKPhaseSelectorProps> = ({
                 <input
                   {...register("meaning")}
                   type="hidden"
-                  value={item.activity.at(index)?.itemName}
+                  value={item.activity.at(0)?.itemName}
                 />
 
                 <input
