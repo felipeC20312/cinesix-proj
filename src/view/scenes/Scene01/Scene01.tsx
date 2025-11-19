@@ -64,17 +64,24 @@ export const Scene01 = () => {
           </div>
         </div>
 
-        <div className="bg-background aspect-video h-11/12 overflow-hidden rounded-2xl border-6 border-white md:h-auto md:w-full">
-          <video
-            key={currentVideo}
-            ref={videoRef}
-            className="w-full rounded-lg"
-            muted
-            autoPlay
-            onEnded={hdlEnded}
-          >
-            <source src={videos[currentVideo]} />
-          </video>
+        <div className="bg-background aspect-video h-auto w-full overflow-hidden rounded-2xl border-6 border-white">
+          {!exiting ? (
+            <video
+              key={currentVideo}
+              ref={videoRef}
+              className="w-full rounded-lg"
+              muted
+              autoPlay
+              onEnded={hdlEnded}
+            >
+              <source src={videos[currentVideo]} />
+            </video>
+          ) : (
+            <img
+              src="/assets/imgs/bg_corredor.svg"
+              className="h-full w-full object-cover"
+            />
+          )}
         </div>
       </div>
 
@@ -95,7 +102,7 @@ export const Scene01 = () => {
               hdlChangeScene("/scene02");
             }}
           >
-            <div className="relative w-full overflow-clip rounded-lg border-4 border-white">
+            <div className="relative h-auto w-full overflow-clip rounded-lg border-4 border-white">
               <img
                 src="/assets/imgs/bg_feira.svg"
                 className="h-full w-full object-cover"

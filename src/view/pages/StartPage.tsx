@@ -425,12 +425,16 @@ export const StartPage = () => {
                 <h1 className="text-2xl font-semibold">
                   Fernanda Soares (Nanda Marine)
                 </h1>
-                <p>Branding, escolha de trilha, animação</p>
+                <p className="font-thin">
+                  Branding, escolha de trilha, animação
+                </p>
               </section>
 
               <section>
                 <h1 className="text-2xl font-semibold">Thais Vitória</h1>
-                <p>Branding, escolha de trilha, animação</p>
+                <p className="font-thin">
+                  Branding, escolha de trilha, animação
+                </p>
               </section>
             </div>
 
